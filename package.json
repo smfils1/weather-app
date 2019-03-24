@@ -1,0 +1,28 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "Weather App",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "start-build":" npm run build & npm start",
+    "dev-watch": "watchify public/js/app.js -o public/js/app-build.js ",
+    "dev-start": "nodemon src/app.js -e js,ejs",
+    "build": "browserify public/js/app.js -o public/js/app-build.js",
+    "postinstall": "npm run build"
+  },
+  "keywords": [],
+  "author": "Samuel Fils",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.18.10",
+    "watchify": "^3.11.1"
+  },
+  "dependencies": {
+    "browserify": "^16.2.3",
+    "dotenv": "^7.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "request": "^2.88.0"
+  }
+}

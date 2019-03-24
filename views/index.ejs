@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/weather-icons.min.css">
+    <title>Home</title>
+</head>
+<body>
+
+<% if(error){ %>
+  <p><%=error%></p>
+
+<% }else{%>
+  <i class="wi wi-thermometer" style="font-size: 3em"></i>
+  <p>Temperature:<span id='temperature' class="weatherInfo"> <%= weather.currently.temperature%></span></p>
+
+  <p>Summary:<span id='summary' class="weatherInfo"> <%= weather.currently.summary%></span></p>
+
+  <p>Location:<span id='address' class="weatherInfo"> <%= weather.location.address%></span></p>
+
+  <p>Icon:<span id='icon' class="weatherInfo"> <%= weather.currently.icon%></span></p>
+
+  <i class="wi wi-humidity" style="font-size: 3em"></i>
+  <p>Precipation Probability:<span id='precipProbability' class="weatherInfo"> <%= weather.currently.precipProbability%>%</span></p>
+
+  <i class="wi wi-strong-wind" style="font-size: 3em"></i>
+  <p>Wind Speed:<span id='windSpeed' class="weatherInfo"> <%= weather.currently.windSpeed%></span></p>
+
+
+  <form action="#" id="weatherForm" class="form-control">
+    <input type="text" id="search"  placeholder="Enter Location">
+    <button type="submit">Search</button> 
+  </form>  
+<% }%>
+
+<canvas id="main-icon" class="icon" width="128" height="128"></canvas>
+<i id="backup-icon" class="icon" style="font-size: 6em"></i>
+
+
+<script src="/js/skycons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/places.js@1.16.1"></script>
+
+<script src="/js/app-build.js"></script>
+
+ 
+</body>
+</html>
