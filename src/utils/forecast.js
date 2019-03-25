@@ -5,17 +5,18 @@ const forecast = (location, callback) => {
 
     request({url, json:true}, (err,res)=>{
         if(err){ //Low level Error like no internet
-            callback('Cant Connect to weather service');        
+            callback("Can't Connect to Geo Service");        
         } else if(res.body.error) { //Request Error
-            callback('Cant find location') 
+            callback("Can't find location") 
         } else {
             const {
                 currently:{
-                temperature,precipProbability, summary,windSpeed, icon
+                temperature,apparentTemperature, precipProbability, summary,windSpeed, icon
                 }
             } = res.body;
             const currently = { 
                 temperature,
+                apparentTemperature,
                 precipProbability,
                 summary,
                 windSpeed,

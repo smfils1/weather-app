@@ -1,3 +1,4 @@
+const backupIcons = require('../../src/utils/icons').backupIcons
 window.addEventListener("load", () => {
   const geolocator = navigator.geolocation;
   
@@ -7,21 +8,25 @@ window.addEventListener("load", () => {
         return response.json();
       })
       .then(data => {
-        if (!data.error) {
-          changeWeatherInfo(data);
-          createIcon(data);
+        if (data.error) {
+          return changeWeatherInfo(data,data.error);
         }
+        changeWeatherInfo(data);
+        createIcon(data);
       });
   };
 
   if (geolocator) {
-    geolocator.getCurrentPosition(onPositionReceived, undefined, {
-      timeout: 10000
-    });
+    geolocator.getCurrentPosition(onPositionReceived, undefined);
   }
 });
-const changeWeatherInfo = data => {
+const changeWeatherInfo = (data,error) => {
   const elements = document.querySelectorAll(".weatherInfo");
+  if(error){
+    return elements.forEach((item)=>{
+      item.textContent = (item.id === "address")? error: "N/A"
+    })
+  }
   elements.forEach(item => {
     item.textContent =
       data.location[item.id] !== undefined
@@ -32,6 +37,7 @@ const changeWeatherInfo = data => {
     }
   });
 };
+
 const weatherForm = document.querySelector("#weatherForm");
 weatherForm.addEventListener("submit", e => {
   e.preventDefault();
@@ -44,29 +50,27 @@ weatherForm.addEventListener("submit", e => {
       return response.json();
     })
     .then(data => {
-      if (!data.error) {
-        changeWeatherInfo(data);
-        createIcon(data);
+      if (data.error) {
+        return changeWeatherInfo(data,data.error);
       }
+      changeWeatherInfo(data);
+      createIcon(data);
     });
 });
 const createIcon = data => {
-  const backupIcons = {
-    hail: "wi-forecast-io-hail",
-    thunderstorm: "wi-forecast-io-thunderstorm",
-    tornado: "wi-forecast-io-tornado"
-  };
+
   const mainIcon = document.getElementById("main-icon");
   const backupIcon = document.getElementById("backup-icon");
   const icon = data.currently.icon;
   if (backupIcons[icon]) {
     backupIcon.style.display = "inline-block";
     mainIcon.style.display = "none";
-    backupIcon.classList.add("wi", backupIcons[icon]);
+    backupIcon.classList= "";
+    backupIcon.classList.add("icon","wi", backupIcons[icon]);
   } else {
     backupIcon.style.display = "none";
     mainIcon.style.display = "inline-block";
-    let skycons = new Skycons({ color: "black", resizeClear: true });
+    let skycons = new Skycons({ color: "white", resizeClear: true });
     skycons.set("main-icon", icon);
     skycons.play();
   }
