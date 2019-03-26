@@ -56,4 +56,4 @@ const ipGeoCode = callback => {
     }
   });
 };
-module.exports = { geoCode, ipGeoCode, mapGeoCode };
+module.exports = geoCode;

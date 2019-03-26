@@ -4,7 +4,7 @@ const request = require("request");
 const express = require("express");
 const path = require("path");
 
-const { geoCode, ipGeoCode, mapGeoCode } = require("../src/utils/geocode");
+const geoCode = require("../src/utils/geocode");
 const forecast = require("../src/utils/forecast");
 const icons = require("./utils/icons").icons;
 const app = express();
@@ -13,9 +13,10 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  const url = `http://localhost:3000/weather/?ip=true`;
+  let url = `${req.protocol}://${req.get('host')}${req.originalUrl}weather/?ip=true`;
   request({ url, json: true }, (err, response) => {
-    if (err) {
+    if (err) {     
+      
       //Low level Error like no internet
 
       res.render("index", {
@@ -40,6 +41,7 @@ app.get("/", (req, res) => {
     }
   });
 });
+
 
 app.get("/weather", (req, res) => {
   const { address, ip, lat, long } = req.query;
