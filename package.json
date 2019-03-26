@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "start-build":" npm run build & npm start",
+    "start-build": "npm run build & npm start",
     "dev-watch": "watchify public/js/app.js -o public/js/app-build.js ",
     "dev-start": "nodemon src/app.js -e js,ejs",
     "build": "browserify public/js/app.js -o public/js/app-build.js",

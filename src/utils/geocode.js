@@ -3,13 +3,14 @@ const request = require("request");
 const geoCode = (location, callback) => {
   const {
     address,
-    coords: { lat, long }
+    coords: { lat, long },
+    ip
   } = location;
   if (address || (lat && long)) {
     return mapGeoCode(location, callback);
   }
 
-  ipGeoCode(callback);
+  ipGeoCode(ip,callback);
 };
 
 const mapGeoCode = ({ address, coords }, callback) => {
@@ -36,8 +37,8 @@ const mapGeoCode = ({ address, coords }, callback) => {
   });
 };
 
-const ipGeoCode = callback => {
-  const url = `http://ip-api.com/json/`;
+const ipGeoCode = (ip, callback) => {
+  let url = `http://ip-api.com/json/${ip}`; 
 
   request({ url, json: true }, (err, res) => {
     if (err) {

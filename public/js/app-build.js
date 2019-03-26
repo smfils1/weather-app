@@ -191,7 +191,7 @@ window.addEventListener("load", () => {
   const geolocator = navigator.geolocation;
   
   const onPositionReceived = ({ coords: { latitude, longitude } }) => {
-    fetch(`http://localhost:3000/weather?lat=${latitude}&long=${longitude}`)
+    fetch(`/weather?lat=${latitude}&long=${longitude}`)
       .then(response => {
         return response.json();
       })
@@ -233,13 +233,13 @@ weatherForm.addEventListener("submit", e => {
 
   const location = search.value;
 
-  fetch(`http://localhost:3000/weather?address=${location}`)
+  fetch(`/weather?address=${location}`)
     .then(response => {
       return response.json();
     })
     .then(data => {
       if (data.error) {
-        return changeWeatherInfo(data,data.error);
+        return changeWeatherInfo(data,"Can't find location");
       }
       changeWeatherInfo(data);
       createIcon(data);

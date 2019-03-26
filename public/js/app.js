@@ -51,7 +51,7 @@ weatherForm.addEventListener("submit", e => {
     })
     .then(data => {
       if (data.error) {
-        return changeWeatherInfo(data,data.error);
+        return changeWeatherInfo(data,"Can't find location");
       }
       changeWeatherInfo(data);
       createIcon(data);

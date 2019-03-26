@@ -11,9 +11,11 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, "../public")));
 app.set("view engine", "ejs");
+app.enable('trust proxy')
+
 
 app.get("/", (req, res) => {
-  let url = `${req.protocol}://${req.get('host')}${req.originalUrl}weather/?ip=true`;
+  let url = `${req.protocol}://${req.get('host')}${req.originalUrl}weather/?ip=${req.ip}`;
   request({ url, json: true }, (err, response) => {
     if (err) {     
       
@@ -52,7 +54,8 @@ app.get("/weather", (req, res) => {
   }
   const location = {
     address,
-    coords: { lat, long }
+    coords: { lat, long },
+    ip
   };
   geoCode(location, (error, { lat, long, location } = {}) => {
     //res is destructed
